@@ -44,7 +44,7 @@ public class MessageWebsocketController {
   @MessageMapping("/websocket-new-chat")
   public void chatNew(ChatRequest chatRequest) {
     log.info("New chat request {}", chatRequest);
-    simpMessagingTemplate.convertAndSend("/topic/new-chat/" + chatRequest.getToUser(),
+    simpMessagingTemplate.convertAndSend("/topic/new-chat/" + chatRequest.getToUserId(),
         chatRequest);
   }
 }

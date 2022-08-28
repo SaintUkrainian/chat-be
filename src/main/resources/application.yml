@@ -1,4 +1,8 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chat-app?useSSL=false&serverTimezone=UTC
+    username: denysmatsenko
+    password: 00zomifi
   kafka:
     consumer:
       bootstrap-servers: localhost:9092

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class ChatRequest {
 
   private String chatId;
-  private String fromUser;
-  private String toUser;
+  private String fromUserId;
+  private String toUserId;
+
 }
