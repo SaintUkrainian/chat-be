@@ -14,7 +14,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @RequiredArgsConstructor
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
-  private static final String ENDPOINT_PATH = "/messages";
+  private static final String ENDPOINT_PATH = "/chat";
   private static final String BROKER_TOPIC = "/topic";
 
   private final UserHandshakeHandler userHandshakeHandler;
