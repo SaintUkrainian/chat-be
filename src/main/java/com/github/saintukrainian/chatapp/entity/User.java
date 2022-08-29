@@ -1,36 +1,35 @@
 package com.github.saintukrainian.chatapp.entity;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
-@Table(name = "chat")
+@Table(name = "user_info")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Chat {
+public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "chat_id")
-  private Long chatId;
+  @Column(name = "user_id")
+  private Long userId;
 
-  @Column(name = "create_timestamp")
-  private LocalDateTime createTimestamp;
+  @Column(name = "username")
+  private String username;
 
-  @Column(name = "created_by_user_id")
-  private Long createdByUserId;
+  @Column(name = "email")
+  private String email;
+
+  @JsonIgnore
+  @Column(name = "password")
+  private String password;
 }

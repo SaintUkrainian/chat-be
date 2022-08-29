@@ -2,17 +2,18 @@ package com.github.saintukrainian.chatapp.model;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatRequest {
+@Builder
+public class ChatMessageDto {
 
   private Long chatId;
-  private Long fromUserId;
-  private Long toUserId;
-  private LocalDateTime createTimestamp;
-
+  private LocalDateTime sendTimestamp;
+  private String value;
+  private UserDto fromUser;
 }

@@ -1,6 +1,7 @@
 package com.github.saintukrainian.chatapp.entity;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,27 +22,20 @@ public class ChatMessage {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "message_id")
   private Long messageId;
 
-  private Long chatId;
-
+  @Column(name = "value")
   private String value;
 
-  private Long fromUserId;
-
-  private Long toUserId;
-
+  @Column(name = "send_timestamp")
   private LocalDateTime sendTimestamp;
 
   @ManyToOne
-  @JoinColumn(name = "chatId")
+  @JoinColumn(name = "chat_id")
   private Chat chat;
 
   @ManyToOne
   @JoinColumn(name = "from_user_id")
-  private ChatUser fromUser;
-
-  @ManyToOne
-  @JoinColumn(name = "to_user_id")
-  private ChatUser toUser;
+  private User fromUser;
 }
