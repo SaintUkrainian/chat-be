@@ -3,7 +3,6 @@ package com.github.saintukrainian.chatapp.service;
 import com.github.saintukrainian.chatapp.entity.Chat;
 import com.github.saintukrainian.chatapp.model.ChatRequest;
 import com.github.saintukrainian.chatapp.repository.ChatRepository;
-import com.github.saintukrainian.chatapp.repository.ComplexChatRepository;
 import com.github.saintukrainian.chatapp.utils.DatePopulater;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ComplexChatService {
+public class ChatFacade {
 
-  final ComplexChatRepository complexChatRepository;
   final ChatRepository chatRepository;
 
   @Transactional

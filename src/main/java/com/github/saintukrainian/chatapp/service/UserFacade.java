@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserFacade {
 
   final UserRepository userRepository;
   final ComplexUserRepository complexUserRepository;
 
   public UserDto findUserByLoginRequest(LoginRequest request) {
-    User user =
-        complexUserRepository.findUserByLoginRequest(request);
+    User user = userRepository.findByUsernameAndPassword(request.getUsername(),
+        request.getPassword());
 
     return UserDto.builder()
         .userId(user.getUserId())

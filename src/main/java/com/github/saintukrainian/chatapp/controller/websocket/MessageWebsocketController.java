@@ -1,4 +1,4 @@
-package com.github.saintukrainian.chatapp.controller;
+package com.github.saintukrainian.chatapp.controller.websocket;
 
 import com.github.saintukrainian.chatapp.model.ChatMessageDto;
 import com.github.saintukrainian.chatapp.service.ChatMessageFacade;
@@ -19,6 +19,7 @@ public class MessageWebsocketController {
   @MessageMapping("/websocket-private-chat")
   public void privateChat(ChatMessageDto message) {
     chatMessageFacade.saveChatMessage(message);
+
     simpMessagingTemplate.convertAndSend("/topic/private-chat/" + message.getChatId(), message);
   }
 

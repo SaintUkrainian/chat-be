@@ -2,7 +2,7 @@ package com.github.saintukrainian.chatapp.controller;
 
 import com.github.saintukrainian.chatapp.model.LoginRequest;
 import com.github.saintukrainian.chatapp.model.UserDto;
-import com.github.saintukrainian.chatapp.service.UserService;
+import com.github.saintukrainian.chatapp.service.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-  final UserService userService;
+  final UserFacade userFacade;
 
   @PostMapping("/login")
   public ResponseEntity<UserDto> login(@RequestBody LoginRequest loginRequest) {
-    return ResponseEntity.ok(userService.findUserByLoginRequest(loginRequest));
+    return ResponseEntity.ok(userFacade.findUserByLoginRequest(loginRequest));
   }
 }

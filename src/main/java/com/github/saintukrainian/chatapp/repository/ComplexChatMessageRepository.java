@@ -3,7 +3,6 @@ package com.github.saintukrainian.chatapp.repository;
 import com.github.saintukrainian.chatapp.model.ChatMessageDto;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.Transient;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,10 +1,9 @@
-package com.github.saintukrainian.chatapp.controller;
+package com.github.saintukrainian.chatapp.controller.websocket;
 
 import com.github.saintukrainian.chatapp.entity.ChatUser;
 import com.github.saintukrainian.chatapp.model.ChatRequest;
-import com.github.saintukrainian.chatapp.repository.ChatUserRepository;
-import com.github.saintukrainian.chatapp.service.ChatUserService;
-import com.github.saintukrainian.chatapp.service.ComplexChatService;
+import com.github.saintukrainian.chatapp.service.ChatFacade;
+import com.github.saintukrainian.chatapp.service.ChatUserFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,21 +15,20 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class ChatWebsocketController {
 
-  final ComplexChatService complexChatService;
-  final ChatUserService chatUserService;
-  final ChatUserRepository chatUserRepository;
+  final ChatFacade chatFacade;
+  final ChatUserFacade chatUserFacade;
   final SimpMessagingTemplate simpMessagingTemplate;
 
   @MessageMapping("/websocket-new-chat")
   public void chatNew(ChatRequest chatRequest) {
-    complexChatService.createNewChat(chatRequest);
+    chatFacade.createNewChat(chatRequest);
 
-    chatUserService.populateChatForUsers(chatRequest);
+    chatUserFacade.populateChatForUsers(chatRequest);
 
-    ChatUser fromUserChat = chatUserRepository.findChatUserByUserUserIdAndChatId(
+    ChatUser fromUserChat = chatUserFacade.findChatUserByUserIdAndChatId(
         chatRequest.getFromUserId(),
         chatRequest.getChatId());
-    ChatUser toUserChat = chatUserRepository.findChatUserByUserUserIdAndChatId(
+    ChatUser toUserChat = chatUserFacade.findChatUserByUserIdAndChatId(
         chatRequest.getToUserId(),
         chatRequest.getChatId());
 
