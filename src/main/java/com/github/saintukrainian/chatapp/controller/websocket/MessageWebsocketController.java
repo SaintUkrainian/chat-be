@@ -20,8 +20,13 @@ public class MessageWebsocketController {
   public void privateChat(ChatMessageDto message) {
     chatMessageFacade.saveChatMessage(message);
 
+    log.info("Sending message: {}", message);
+
     simpMessagingTemplate.convertAndSend("/topic/private-chat/" + message.getChatId(), message);
   }
 
-
+  @MessageMapping("/websocket-private-chat/edit-message")
+  public void editMessage(ChatMessageDto message) {
+    log.info("Editing ");
+  }
 }

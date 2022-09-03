@@ -1,5 +1,10 @@
 package com.github.saintukrainian.chatapp.repository;
 
+import static com.github.saintukrainian.chatapp.constants.QueryParams.CHAT_ID;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.FROM_USER_ID;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.SEND_TIMESTAMP;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.VALUE;
+
 import com.github.saintukrainian.chatapp.model.ChatMessageDto;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -22,10 +27,10 @@ public class ComplexChatMessageRepository {
         "INSERT INTO chat_message (chat_id, value, from_user_id, send_timestamp) "
             + "VALUES (:chatId, :value, :fromUserId, :sendTimestamp)");
 
-    nativeQuery.setParameter("chatId", chatMessageDto.getChatId());
-    nativeQuery.setParameter("value", chatMessageDto.getValue());
-    nativeQuery.setParameter("fromUserId", chatMessageDto.getFromUser().getUserId());
-    nativeQuery.setParameter("sendTimestamp", chatMessageDto.getSendTimestamp());
+    nativeQuery.setParameter(CHAT_ID, chatMessageDto.getChatId());
+    nativeQuery.setParameter(VALUE, chatMessageDto.getValue());
+    nativeQuery.setParameter(FROM_USER_ID, chatMessageDto.getFromUser().getUserId());
+    nativeQuery.setParameter(SEND_TIMESTAMP, chatMessageDto.getSendTimestamp());
 
     nativeQuery.executeUpdate();
     log.info("Message saved");

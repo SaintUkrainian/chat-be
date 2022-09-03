@@ -1,5 +1,9 @@
 package com.github.saintukrainian.chatapp.repository;
 
+import static com.github.saintukrainian.chatapp.constants.QueryParams.CHAT_ID;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.CHAT_WITH_USER_ID;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.USER_ID;
+
 import com.github.saintukrainian.chatapp.model.ChatRequest;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -20,16 +24,16 @@ public class ComplexChatUserRepository {
     log.info("Populating chat by chat request: {}", request);
     Query nativeQuery = entityManager.createNativeQuery(
         "INSERT INTO chat_user (chat_id, user_id, chat_with_user_id) "
-            + "VALUES (:chat_id, :user_id, :chat_with_user_id)");
+            + "VALUES (:chatId, :userId, :chatWithUserId)");
 
-    nativeQuery.setParameter("chat_id", request.getChatId());
-    nativeQuery.setParameter("user_id", request.getFromUserId());
-    nativeQuery.setParameter("chat_with_user_id", request.getToUserId());
+    nativeQuery.setParameter(CHAT_ID, request.getChatId());
+    nativeQuery.setParameter(USER_ID, request.getFromUserId());
+    nativeQuery.setParameter(CHAT_WITH_USER_ID, request.getToUserId());
 
     nativeQuery.executeUpdate();
 
-    nativeQuery.setParameter("user_id", request.getToUserId());
-    nativeQuery.setParameter("chat_with_user_id", request.getFromUserId());
+    nativeQuery.setParameter(USER_ID, request.getToUserId());
+    nativeQuery.setParameter(CHAT_WITH_USER_ID, request.getFromUserId());
 
     nativeQuery.executeUpdate();
   }
