@@ -2,6 +2,8 @@ package com.github.saintukrainian.chatapp.repository;
 
 import static com.github.saintukrainian.chatapp.constants.QueryParams.CHAT_ID;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.FROM_USER_ID;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.MESSAGE_ID;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.NEW_VALUE;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.SEND_TIMESTAMP;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.VALUE;
 
@@ -34,5 +36,14 @@ public class ComplexChatMessageRepository {
 
     nativeQuery.executeUpdate();
     log.info("Message saved");
+  }
+
+  @Transactional
+  public void editMessage(ChatMessageDto message) {
+    Query nativeQuery = entityManager.createNativeQuery(
+        "UPDATE chat_message SET value = :newValue, is_edited = true WHERE message_id = :messageId");
+    nativeQuery.setParameter(MESSAGE_ID, message.getMessageId());
+    nativeQuery.setParameter(NEW_VALUE, message.getValue());
+    nativeQuery.executeUpdate();
   }
 }

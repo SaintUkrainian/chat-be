@@ -10,4 +10,6 @@ public class QueryParams {
   public static final String CHAT_WITH_USER_ID = "chatWithUserId";
   public static final String USERNAME = "username";
   public static final String PASSWORD = "password";
+  public static final String NEW_VALUE = "newValue";
+  public static final String MESSAGE_ID = "messageId";
 }

@@ -31,6 +31,9 @@ public class ChatMessage {
   @Column(name = "send_timestamp")
   private LocalDateTime sendTimestamp;
 
+  @Column(name = "is_edited")
+  private boolean edited;
+
   @ManyToOne
   @JoinColumn(name = "chat_id")
   private Chat chat;

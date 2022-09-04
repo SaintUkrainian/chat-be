@@ -13,6 +13,9 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class MessageWebsocketController {
 
+  public static final String PRIVATE_CHAT_BASE_PATH = "/topic/private-chat/";
+  public static final String EDIT_MESSAGE_PATH = "/edit-message";
+  public static final String DELETE_MESSAGE_PATH = "/delete-message";
   final ChatMessageFacade chatMessageFacade;
   final SimpMessagingTemplate simpMessagingTemplate;
 
@@ -22,11 +25,22 @@ public class MessageWebsocketController {
 
     log.info("Sending message: {}", message);
 
-    simpMessagingTemplate.convertAndSend("/topic/private-chat/" + message.getChatId(), message);
+    simpMessagingTemplate.convertAndSend(PRIVATE_CHAT_BASE_PATH + message.getChatId(), message);
   }
 
   @MessageMapping("/websocket-private-chat/edit-message")
   public void editMessage(ChatMessageDto message) {
-    log.info("Editing ");
+    chatMessageFacade.editMessage(message);
+
+    simpMessagingTemplate.convertAndSend(
+        PRIVATE_CHAT_BASE_PATH + message.getChatId() + EDIT_MESSAGE_PATH, message);
+  }
+
+  @MessageMapping("/websocket-private-chat/delete-message")
+  public void deleteMessage(ChatMessageDto message) {
+    chatMessageFacade.deleteMessage(message);
+
+    simpMessagingTemplate.convertAndSend(
+        PRIVATE_CHAT_BASE_PATH + message.getChatId() + DELETE_MESSAGE_PATH, message);
   }
 }
