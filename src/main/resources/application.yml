@@ -1,11 +1,6 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/chat-app?useSSL=false&serverTimezone=UTC
-    username: denysmatsenko
-    password: 00zomifi
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092
       auto-offset-reset: earliest
       group-id: chat-app-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -14,9 +9,38 @@ spring:
         spring.json.trusted.packages: com.github.saintukrainian.chatapp.*
     topic: topic
     producer:
-      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-  websocket:
-    topic-base-path: /topic
-    message-path: ${spring.websocket.topic-base-path}/message
+    websocket:
+      topic-base-path: /topic
+      message-path: ${spring.websocket.topic-base-path}/message
+server:
+  port: 8080
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chat-app?useSSL=false&serverTimezone=UTC
+    username: denysmatsenko
+    password: 00zomifi
+  kafka:
+    bootstrap-servers: localhost:9092
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/chat-app?useSSL=false&serverTimezone=UTC
+    username: denysmatsenko
+    password: 00zomifi
+  kafka:
+    bootstrap-servers: broker:9092
+server:
+  port: 8080
