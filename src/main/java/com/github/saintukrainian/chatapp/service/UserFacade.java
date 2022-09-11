@@ -1,9 +1,12 @@
 package com.github.saintukrainian.chatapp.service;
 
-import com.github.saintukrainian.chatapp.entity.User;
-import com.github.saintukrainian.chatapp.model.LoginRequest;
+import com.github.saintukrainian.chatapp.mapper.UserDtoMapper;
 import com.github.saintukrainian.chatapp.model.UserDto;
+import com.github.saintukrainian.chatapp.model.request.LoginRequest;
+import com.github.saintukrainian.chatapp.model.request.SearchRequest;
+import com.github.saintukrainian.chatapp.repository.ComplexUserRepository;
 import com.github.saintukrainian.chatapp.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +15,15 @@ import org.springframework.stereotype.Service;
 public class UserFacade {
 
   final UserRepository userRepository;
+  final ComplexUserRepository complexUserRepository;
+  final UserDtoMapper userDtoMapper;
 
   public UserDto findUserByLoginRequest(LoginRequest request) {
-    User user = userRepository.findByUsernameAndPassword(request.getUsername(),
-        request.getPassword());
+    return userDtoMapper.mapToUserDto(
+        userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword()));
+  }
 
-    return UserDto.builder()
-        .userId(user.getUserId())
-        .email(user.getEmail())
-        .username(user.getUsername())
-        .build();
+  public List<UserDto> findUsersBySearchRequest(SearchRequest request) {
+    return userDtoMapper.mapToUserDtoList(complexUserRepository.findUsersBySearchRequest(request));
   }
 }

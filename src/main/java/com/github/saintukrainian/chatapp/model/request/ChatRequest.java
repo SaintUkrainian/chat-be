@@ -1,4 +1,4 @@
-package com.github.saintukrainian.chatapp.model;
+package com.github.saintukrainian.chatapp.model.request;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

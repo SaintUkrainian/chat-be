@@ -1,7 +1,7 @@
 package com.github.saintukrainian.chatapp.service;
 
 import com.github.saintukrainian.chatapp.entity.Chat;
-import com.github.saintukrainian.chatapp.model.ChatRequest;
+import com.github.saintukrainian.chatapp.model.request.ChatRequest;
 import com.github.saintukrainian.chatapp.repository.ChatRepository;
 import com.github.saintukrainian.chatapp.utils.DatePopulater;
 import javax.transaction.Transactional;

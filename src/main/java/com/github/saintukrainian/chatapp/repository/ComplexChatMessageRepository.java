@@ -7,7 +7,7 @@ import static com.github.saintukrainian.chatapp.constants.QueryParams.NEW_VALUE;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.SEND_TIMESTAMP;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.VALUE;
 
-import com.github.saintukrainian.chatapp.model.ChatMessageDto;
+import com.github.saintukrainian.chatapp.model.request.ChatMessageDto;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;

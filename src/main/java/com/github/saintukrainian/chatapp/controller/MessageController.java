@@ -1,6 +1,6 @@
 package com.github.saintukrainian.chatapp.controller;
 
-import com.github.saintukrainian.chatapp.model.ChatMessageDto;
+import com.github.saintukrainian.chatapp.model.request.ChatMessageDto;
 import com.github.saintukrainian.chatapp.service.ChatMessageFacade;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

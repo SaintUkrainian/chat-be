@@ -1,6 +1,5 @@
 package com.github.saintukrainian.chatapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,6 @@ public class User {
   @Column(name = "email")
   private String email;
 
-  @JsonIgnore
   @Column(name = "password")
   private String password;
 }

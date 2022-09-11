@@ -4,7 +4,7 @@ import static com.github.saintukrainian.chatapp.constants.QueryParams.CHAT_ID;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.CHAT_WITH_USER_ID;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.USER_ID;
 
-import com.github.saintukrainian.chatapp.model.ChatRequest;
+import com.github.saintukrainian.chatapp.model.request.ChatRequest;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;

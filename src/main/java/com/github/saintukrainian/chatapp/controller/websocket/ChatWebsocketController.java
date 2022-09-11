@@ -1,7 +1,7 @@
 package com.github.saintukrainian.chatapp.controller.websocket;
 
 import com.github.saintukrainian.chatapp.entity.ChatUser;
-import com.github.saintukrainian.chatapp.model.ChatRequest;
+import com.github.saintukrainian.chatapp.model.request.ChatRequest;
 import com.github.saintukrainian.chatapp.service.ChatFacade;
 import com.github.saintukrainian.chatapp.service.ChatUserFacade;
 import lombok.RequiredArgsConstructor;

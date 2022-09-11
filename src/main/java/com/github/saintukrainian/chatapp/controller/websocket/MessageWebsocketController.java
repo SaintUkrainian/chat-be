@@ -1,6 +1,6 @@
 package com.github.saintukrainian.chatapp.controller.websocket;
 
-import com.github.saintukrainian.chatapp.model.ChatMessageDto;
+import com.github.saintukrainian.chatapp.model.request.ChatMessageDto;
 import com.github.saintukrainian.chatapp.service.ChatMessageFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

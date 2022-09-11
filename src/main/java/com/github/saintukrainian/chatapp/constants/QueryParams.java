@@ -1,5 +1,9 @@
 package com.github.saintukrainian.chatapp.constants;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QueryParams {
 
   public static final String CHAT_ID = "chatId";
@@ -12,4 +16,5 @@ public class QueryParams {
   public static final String PASSWORD = "password";
   public static final String NEW_VALUE = "newValue";
   public static final String MESSAGE_ID = "messageId";
+  public static final String SEARCH_STRING = "searchString";
 }
