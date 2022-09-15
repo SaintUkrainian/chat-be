@@ -1,19 +1,17 @@
-package com.github.saintukrainian.chatapp.model;
+package com.github.saintukrainian.chatapp.model.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class UserDto {
+public class RegistrationRequest {
 
-  private Long userId;
-  private String username;
-  private String email;
   private String firstName;
   private String lastName;
+  private String username;
+  private String password;
+  private String email;
 }

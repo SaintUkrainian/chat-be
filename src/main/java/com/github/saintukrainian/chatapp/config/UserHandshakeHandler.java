@@ -1,5 +1,6 @@
 package com.github.saintukrainian.chatapp.config;
 
+import com.github.saintukrainian.chatapp.context.UserContext;
 import com.github.saintukrainian.chatapp.utils.QueryParser;
 import com.sun.security.auth.UserPrincipal;
 import java.security.Principal;
@@ -20,6 +21,8 @@ public class UserHandshakeHandler extends DefaultHandshakeHandler {
   protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler,
       Map<String, Object> attributes) {
     Map<String, String> params = QueryParser.parse(request.getURI().getQuery());
-    return new UserPrincipal(params.get(USER_ID_PARAM));
+    UserPrincipal currentUser = new UserPrincipal(params.get(USER_ID_PARAM));
+    UserContext.login(currentUser);
+    return currentUser;
   }
 }
