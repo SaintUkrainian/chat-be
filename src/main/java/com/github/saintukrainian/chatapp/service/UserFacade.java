@@ -1,6 +1,8 @@
 package com.github.saintukrainian.chatapp.service;
 
 import com.github.saintukrainian.chatapp.entity.User;
+import com.github.saintukrainian.chatapp.exception.LoginFailException;
+import com.github.saintukrainian.chatapp.exception.RegistrationFailException;
 import com.github.saintukrainian.chatapp.mapper.UserDtoMapper;
 import com.github.saintukrainian.chatapp.model.UserDto;
 import com.github.saintukrainian.chatapp.model.request.LoginRequest;
@@ -24,8 +26,14 @@ public class UserFacade {
   final UserDtoMapper userDtoMapper;
 
   public UserDto findUserByLoginRequest(LoginRequest request) {
-    return userDtoMapper.mapToUserDto(
-        userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword()));
+    log.info("Logging in by login request: {}", request);
+    User foundUser = userRepository.findByUsernameAndPassword(request.getUsername(),
+        request.getPassword());
+
+    if (foundUser == null) {
+      throw new LoginFailException("Invalid Username or Password");
+    }
+    return userDtoMapper.mapToUserDto(foundUser);
   }
 
   public List<UserDto> findUsersBySearchRequest(SearchRequest request) {
@@ -36,13 +44,20 @@ public class UserFacade {
   }
 
   public UserDto registerNewUser(RegistrationRequest registrationRequest) {
-    log.info("Registration of a new user by request: {}", registrationRequest);
+    log.info("Registration of a new user by registration request: {}", registrationRequest);
+
+    String email = registrationRequest.getEmail();
+    String username = registrationRequest.getUsername();
+    if (userRepository.existsByUsernameOrEmail(username, email)) {
+      throw new RegistrationFailException("Username and Email must be unique");
+    }
+
     User user = userRepository.save(User.builder()
-        .username(registrationRequest.getUsername())
+        .username(username)
         .password(registrationRequest.getPassword())
         .firstName(registrationRequest.getFirstName())
         .lastName(registrationRequest.getLastName())
-        .email(registrationRequest.getEmail())
+        .email(email)
         .build());
     log.info("User has been registered with id: {}", user.getUserId());
     return userDtoMapper.mapToUserDto(user);
