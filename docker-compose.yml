@@ -32,6 +32,11 @@ services:
     depends_on:
       - broker
       - zookeeper
+  auth-service:
+    image: auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
   chat-ui:
     image: chat-ui
     container_name: chat-ui
@@ -39,3 +44,4 @@ services:
       - "3000:3000"
     depends_on:
       - chat-service
+      - auth-service
