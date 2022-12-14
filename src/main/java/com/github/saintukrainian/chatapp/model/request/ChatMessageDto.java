@@ -29,4 +29,7 @@ public class ChatMessageDto {
 
   @JsonProperty("isEdited")
   private boolean edited;
+
+  @JsonProperty("isDeleted")
+  private boolean deleted;
 }

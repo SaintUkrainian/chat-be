@@ -62,7 +62,15 @@ public class ChatMessageFacade {
     messageDto.setMessageId(savedMessage.getMessageId());
   }
 
+  public ChatMessageDto findLatestMessageByChatId(Long chatId) {
+    return mapToMessageDto(
+        chatMessageRepository.findTopByChatChatIdOrderBySendTimestampDesc(chatId));
+  }
+
   private ChatMessageDto mapToMessageDto(ChatMessage message) {
+    if (message == null) {
+      return new ChatMessageDto();
+    }
     return ChatMessageDto.builder()
         .chatId(message.getChat().getChatId())
         .edited(message.isEdited())

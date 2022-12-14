@@ -37,6 +37,14 @@ services:
     container_name: auth-service
     ports:
       - "8081:8081"
+  notification-service:
+    image: notification-service
+    container_name: notification-service
+    depends_on:
+      - broker
+      - zookeeper
+    ports:
+      - "8082:8082"
   chat-ui:
     image: chat-ui
     container_name: chat-ui

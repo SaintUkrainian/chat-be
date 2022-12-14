@@ -21,4 +21,9 @@ public class MessageController {
   public ResponseEntity<List<ChatMessageDto>> fetchChatMessages(@PathVariable Long chatId) {
     return ResponseEntity.ok(chatMessageFacade.findMessagesByChatId(chatId));
   }
+
+  @GetMapping("/{chatId}/latest")
+  public ResponseEntity<ChatMessageDto> fetchLatestChatMessage(@PathVariable Long chatId) {
+    return ResponseEntity.ok(chatMessageFacade.findLatestMessageByChatId(chatId));
+  }
 }

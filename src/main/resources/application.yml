@@ -1,22 +1,16 @@
 spring:
+  profiles:
+    default: dev
   kafka:
-    consumer:
-      auto-offset-reset: earliest
-      group-id: chat-app-group
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: com.github.saintukrainian.chatapp.*
-    topic: topic
+    topic: chat-notifications
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     websocket:
       topic-base-path: /topic
       message-path: ${spring.websocket.topic-base-path}/message
 server:
   port: 8080
-
 ---
 
 spring:
@@ -28,7 +22,7 @@ spring:
     username: denysmatsenko
     password: 00zomifi
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
 
 ---
 
@@ -42,7 +36,5 @@ spring:
     password: 00zomifi
   kafka:
     bootstrap-servers: broker:9092
-server:
-  port: 8080
 kafka:
   enabled: true
