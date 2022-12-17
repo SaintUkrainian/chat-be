@@ -1,9 +1,11 @@
 package com.github.saintukrainian.chatapp.controller.websocket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.saintukrainian.chatapp.model.request.ChatMessageDto;
-import com.github.saintukrainian.chatapp.service.ChatMessageFacade;
+import com.github.saintukrainian.chatapp.model.request.MessagesSeenRequest;
+import com.github.saintukrainian.chatapp.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,10 +22,10 @@ public class MessageWebsocketController {
   public static final String PRIVATE_CHAT_BASE_PATH = "/topic/private-chat/";
   public static final String EDIT_MESSAGE_PATH = "/edit-message";
   public static final String DELETE_MESSAGE_PATH = "/delete-message";
-
+  public static final String MESSAGES_SEEN_TOPIC = "messages-seen";
+  final ChatMessageService chatMessageService;
   @Value("${spring.kafka.topic}")
-  private String topic;
-  final ChatMessageFacade chatMessageFacade;
+  private String notificationsTopic;
   final SimpMessagingTemplate simpMessagingTemplate;
 
   final KafkaTemplate<String, String> kafkaTemplate;
@@ -31,21 +33,37 @@ public class MessageWebsocketController {
 
   @MessageMapping("/websocket-private-chat")
   public void privateChat(ChatMessageDto message) throws JsonProcessingException {
-    chatMessageFacade.saveChatMessage(message);
+    chatMessageService.saveChatMessage(message);
+
+    message.setUnseenMessagesCount(
+        chatMessageService.getCountOfUnseenMessagesByChatIdAndUserId(message.getChatId(),
+            message.getFromUser().getUserId()));
 
     log.info("Sending message: {}", message);
 
-    kafkaTemplate.send(topic, mapper.writeValueAsString(message));
+    kafkaTemplate.send(notificationsTopic, mapper.writeValueAsString(message));
 
     simpMessagingTemplate.convertAndSend(PRIVATE_CHAT_BASE_PATH + message.getChatId(), message);
   }
 
+  @MessageMapping("/websocket-private-chat/messages-seen")
+  public void updateMessagesStatusToSeen(String request) throws JsonProcessingException {
+    MessagesSeenRequest messagesSeenRequest = mapper.readValue(request,
+        new TypeReference<>() {
+        });
+
+    log.info("Updating messages status to seen in chat: {}", messagesSeenRequest.getChatId());
+
+    chatMessageService.updateMessagesSeenStatus(messagesSeenRequest.getChatId());
+
+    kafkaTemplate.send(MESSAGES_SEEN_TOPIC, mapper.writeValueAsString(messagesSeenRequest));
+  }
+
   @MessageMapping("/websocket-private-chat/edit-message")
   public void editMessage(ChatMessageDto message) throws JsonProcessingException {
-    chatMessageFacade.editMessage(message);
+    chatMessageService.editMessage(message);
 
-
-    kafkaTemplate.send(topic, mapper.writeValueAsString(message));
+    kafkaTemplate.send(notificationsTopic, mapper.writeValueAsString(message));
 
     simpMessagingTemplate.convertAndSend(
         PRIVATE_CHAT_BASE_PATH + message.getChatId() + EDIT_MESSAGE_PATH, message);
@@ -54,9 +72,9 @@ public class MessageWebsocketController {
   @MessageMapping("/websocket-private-chat/delete-message")
   public void deleteMessage(ChatMessageDto message) throws JsonProcessingException {
     message.setDeleted(true);
-    chatMessageFacade.deleteMessage(message);
+    chatMessageService.deleteMessage(message);
 
-    kafkaTemplate.send(topic, mapper.writeValueAsString(message));
+    kafkaTemplate.send(notificationsTopic, mapper.writeValueAsString(message));
 
     simpMessagingTemplate.convertAndSend(
         PRIVATE_CHAT_BASE_PATH + message.getChatId() + DELETE_MESSAGE_PATH, message);

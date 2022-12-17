@@ -34,6 +34,9 @@ public class ChatMessageSimplified {
   @Column(name = "is_edited")
   private boolean edited;
 
+  @Column(name = "is_seen")
+  private boolean seen;
+
   @Column(name = "chat_id")
   private Long chatId;
 

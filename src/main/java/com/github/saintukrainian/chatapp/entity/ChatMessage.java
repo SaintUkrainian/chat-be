@@ -36,6 +36,9 @@ public class ChatMessage {
   @Column(name = "is_edited")
   private boolean edited;
 
+  @Column(name = "is_seen")
+  private boolean seen;
+
   @ManyToOne
   @JoinColumn(name = "chat_id")
   private Chat chat;

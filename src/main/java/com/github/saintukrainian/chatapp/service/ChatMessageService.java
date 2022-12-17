@@ -8,6 +8,7 @@ import com.github.saintukrainian.chatapp.repository.ChatMessageRepository;
 import com.github.saintukrainian.chatapp.repository.ChatMessageSimplifiedRepository;
 import com.github.saintukrainian.chatapp.repository.ComplexChatMessageRepository;
 import com.github.saintukrainian.chatapp.utils.DatePopulater;
+import java.math.BigInteger;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ChatMessageFacade {
+public class ChatMessageService {
 
   final ChatMessageRepository chatMessageRepository;
   final ChatMessageSimplifiedRepository chatMessageSimplifiedRepository;
@@ -57,6 +58,7 @@ public class ChatMessageFacade {
             .fromUserId(messageDto.getFromUser().getUserId())
             .value(messageDto.getValue())
             .sendTimestamp(messageDto.getSendTimestamp())
+            .seen(messageDto.isSeen())
             .build());
 
     messageDto.setMessageId(savedMessage.getMessageId());
@@ -65,6 +67,14 @@ public class ChatMessageFacade {
   public ChatMessageDto findLatestMessageByChatId(Long chatId) {
     return mapToMessageDto(
         chatMessageRepository.findTopByChatChatIdOrderBySendTimestampDesc(chatId));
+  }
+
+  public BigInteger getCountOfUnseenMessagesByChatId(Long chatId) {
+    return complexChatMessageRepository.getCountOfUnseenMessagesByChatId(chatId);
+  }
+
+  public BigInteger getCountOfUnseenMessagesByChatIdAndUserId(Long chatId, Long userId) {
+    return complexChatMessageRepository.getCountOfUnseenMessagesByChatIdAndUserId(chatId, userId);
   }
 
   private ChatMessageDto mapToMessageDto(ChatMessage message) {
@@ -79,5 +89,9 @@ public class ChatMessageFacade {
         .value(message.getValue())
         .fromUser(userDtoMapper.mapToUserDto(message.getFromUser()))
         .build();
+  }
+
+  public Boolean updateMessagesSeenStatus(Long chatId) {
+    return complexChatMessageRepository.updateMessagesSeenStatus(chatId);
   }
 }

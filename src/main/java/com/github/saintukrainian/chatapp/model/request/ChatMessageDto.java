@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.saintukrainian.chatapp.jackson.serializer.LocalDateTimeSerializer;
 import com.github.saintukrainian.chatapp.model.UserDto;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,11 @@ public class ChatMessageDto {
   @JsonProperty("isEdited")
   private boolean edited;
 
+  @JsonProperty("isSeen")
+  private boolean seen;
+
   @JsonProperty("isDeleted")
   private boolean deleted;
+
+  private BigInteger unseenMessagesCount;
 }
