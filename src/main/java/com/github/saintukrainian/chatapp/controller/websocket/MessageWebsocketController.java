@@ -1,7 +1,6 @@
 package com.github.saintukrainian.chatapp.controller.websocket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.saintukrainian.chatapp.model.request.ChatMessageDto;
 import com.github.saintukrainian.chatapp.model.request.MessagesSeenRequest;
@@ -47,10 +46,8 @@ public class MessageWebsocketController {
   }
 
   @MessageMapping("/websocket-private-chat/messages-seen")
-  public void updateMessagesStatusToSeen(String request) throws JsonProcessingException {
-    MessagesSeenRequest messagesSeenRequest = mapper.readValue(request,
-        new TypeReference<>() {
-        });
+  public void updateMessagesStatusToSeen(MessagesSeenRequest messagesSeenRequest)
+      throws JsonProcessingException {
 
     log.info("Updating messages status to seen in chat: {}", messagesSeenRequest.getChatId());
 

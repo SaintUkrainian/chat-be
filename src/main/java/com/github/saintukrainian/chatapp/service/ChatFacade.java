@@ -18,6 +18,7 @@ public class ChatFacade {
 
   @Transactional
   public void createNewChat(ChatRequest chatRequest) {
+    log.info("Creating new chat by request: {}", chatRequest);
 
     DatePopulater.populateWithTimestamp(chatRequest);
 
