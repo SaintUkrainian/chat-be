@@ -88,6 +88,7 @@ public class ChatMessageService {
         .sendTimestamp(message.getSendTimestamp())
         .value(message.getValue())
         .fromUser(userDtoMapper.mapToUserDto(message.getFromUser()))
+        .seen(message.isSeen())
         .build();
   }
 
