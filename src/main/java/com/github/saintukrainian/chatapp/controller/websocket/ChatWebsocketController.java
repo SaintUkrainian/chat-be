@@ -21,6 +21,9 @@ public class ChatWebsocketController {
 
   @MessageMapping("/websocket-new-chat")
   public void chatNew(ChatRequest chatRequest) {
+    if (chatRequest.getFromUserId().equals(chatRequest.getToUserId())) {
+      throw new IllegalArgumentException("Chat cannot be created with yourself!");
+    }
     chatFacade.createNewChat(chatRequest);
 
     chatUserFacade.populateChatForUsers(chatRequest);
