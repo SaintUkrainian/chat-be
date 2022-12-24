@@ -71,7 +71,13 @@ public class MessageWebsocketController {
     message.setDeleted(true);
     chatMessageService.deleteMessage(message);
 
-    kafkaTemplate.send(notificationsTopic, mapper.writeValueAsString(message));
+    ChatMessageDto latestMessageByChatId = chatMessageService.findLatestMessageByChatId(
+        message.getChatId());
+    latestMessageByChatId.setUnseenMessagesCount(
+        chatMessageService.getCountOfUnseenMessagesByChatIdAndUserId(message.getChatId(),
+            message.getFromUser().getUserId()));
+
+    kafkaTemplate.send(notificationsTopic, mapper.writeValueAsString(latestMessageByChatId));
 
     simpMessagingTemplate.convertAndSend(
         PRIVATE_CHAT_BASE_PATH + message.getChatId() + DELETE_MESSAGE_PATH, message);
