@@ -45,11 +45,11 @@ services:
       - zookeeper
     ports:
       - "8082:8082"
-  chat-ui:
-    image: chat-ui
-    container_name: chat-ui
-    ports:
-      - "3000:3000"
-    depends_on:
-      - chat-service
-      - auth-service
+#  chat-ui:
+#    image: chat-ui
+#    container_name: chat-ui
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      - chat-service
+#      - auth-service

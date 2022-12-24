@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ChatUserFacade {
+public class ChatUserService {
 
   final ComplexChatUserRepository complexChatUserRepository;
   final ChatUserRepository chatUserRepository;
@@ -20,5 +20,10 @@ public class ChatUserFacade {
 
   public ChatUser findChatUserByUserIdAndChatId(Long userId, Long chatId) {
     return chatUserRepository.findChatUserByUserUserIdAndChatId(userId, chatId);
+  }
+
+  public boolean existsByUserIdAndChatWithUserId(Long userId, Long chatWithUserId) {
+    return chatUserRepository.existsChatUserByUserUserIdAndChatWithUserUserId(userId,
+        chatWithUserId);
   }
 }
