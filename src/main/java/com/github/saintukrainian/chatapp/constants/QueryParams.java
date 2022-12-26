@@ -19,4 +19,5 @@ public class QueryParams {
   public static final String SEARCH_STRING = "searchString";
   public static final String CURRENT_USER_ID = "currentUserId";
   public static final String MESSAGES_IDS = "messagesIds";
+  public static final String IMAGE_ID = "imageId";
 }

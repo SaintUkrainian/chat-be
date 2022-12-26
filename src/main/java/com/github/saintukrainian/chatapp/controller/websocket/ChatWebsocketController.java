@@ -1,7 +1,7 @@
 package com.github.saintukrainian.chatapp.controller.websocket;
 
-import com.github.saintukrainian.chatapp.entity.ChatUser;
 import com.github.saintukrainian.chatapp.exception.ChatCreationException;
+import com.github.saintukrainian.chatapp.model.ChatUserDto;
 import com.github.saintukrainian.chatapp.model.request.ChatRequest;
 import com.github.saintukrainian.chatapp.service.ChatFacade;
 import com.github.saintukrainian.chatapp.service.ChatUserService;
@@ -36,10 +36,10 @@ public class ChatWebsocketController {
 
     chatUserService.populateChatForUsers(chatRequest);
 
-    ChatUser fromUserChat = chatUserService.findChatUserByUserIdAndChatId(
+    ChatUserDto fromUserChat = chatUserService.findChatUserByUserIdAndChatId(
         chatRequest.getFromUserId(),
         chatRequest.getChatId());
-    ChatUser toUserChat = chatUserService.findChatUserByUserIdAndChatId(
+    ChatUserDto toUserChat = chatUserService.findChatUserByUserIdAndChatId(
         chatRequest.getToUserId(),
         chatRequest.getChatId());
 

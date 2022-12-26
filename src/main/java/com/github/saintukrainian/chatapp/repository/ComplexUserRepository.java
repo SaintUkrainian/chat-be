@@ -1,7 +1,9 @@
 package com.github.saintukrainian.chatapp.repository;
 
 import static com.github.saintukrainian.chatapp.constants.QueryParams.CURRENT_USER_ID;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.IMAGE_ID;
 import static com.github.saintukrainian.chatapp.constants.QueryParams.SEARCH_STRING;
+import static com.github.saintukrainian.chatapp.constants.QueryParams.USER_ID;
 
 import com.github.saintukrainian.chatapp.context.UserContext;
 import com.github.saintukrainian.chatapp.entity.User;
@@ -34,5 +36,15 @@ public class ComplexUserRepository {
     nativeQuery.setParameter(CURRENT_USER_ID, Long.parseLong(UserContext.CURRENT_USER.getName()));
 
     return (List<User>) nativeQuery.getResultList();
+  }
+
+  public boolean saveImageForUser(Long userId, Long imageId) {
+    Query nativeQuery = entityManager.createNativeQuery(
+        "UPDATE user_info SET image_id = :imageId WHERE user_id = :userId");
+
+    nativeQuery.setParameter(USER_ID, userId);
+    nativeQuery.setParameter(IMAGE_ID, imageId);
+
+    return nativeQuery.executeUpdate() == 1;
   }
 }

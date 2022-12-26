@@ -24,14 +24,14 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-  chat-service:
-    image: chat-service
-    container_name: chat-service
-    ports:
-      - "8080:8080"
-    depends_on:
-      - broker
-      - zookeeper
+  #  chat-service:
+  #    image: chat-service
+  #    container_name: chat-service
+  #    ports:
+  #      - "8080:8080"
+  #    depends_on:
+  #      - broker
+  #      - zookeeper
   auth-service:
     image: auth-service
     container_name: auth-service
