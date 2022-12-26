@@ -1,7 +1,7 @@
 package com.github.saintukrainian.chatapp.controller;
 
-import com.github.saintukrainian.chatapp.entity.ChatUser;
-import com.github.saintukrainian.chatapp.repository.ChatUserRepository;
+import com.github.saintukrainian.chatapp.model.ChatUserDto;
+import com.github.saintukrainian.chatapp.service.ChatUserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/chats")
 public class ChatController {
 
-  final ChatUserRepository chatUserRepository;
+  final ChatUserService chatUserService;
 
   @GetMapping("/{userId}")
-  public ResponseEntity<List<ChatUser>> fetchChatsByUser(@PathVariable Long userId) {
-    return ResponseEntity.ok(chatUserRepository.findChatUsersByUserUserId(userId));
+  public ResponseEntity<List<ChatUserDto>> fetchChatsByUserId(@PathVariable Long userId) {
+    return ResponseEntity.ok(chatUserService.findChatsByUserId(userId));
   }
 }
