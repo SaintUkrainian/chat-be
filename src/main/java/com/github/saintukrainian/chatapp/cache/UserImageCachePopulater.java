@@ -25,6 +25,7 @@ public class UserImageCachePopulater {
         .peek(img -> img.setData(decompress(img.getData())))
         .toList();
     decompressedImages.forEach(img -> UserImageCache.addToCache(img.getUserId(), img));
+    log.info("Image cache has been populated");
   }
 
 }
