@@ -4,17 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class ChatUserDto {
+@SuperBuilder
+public class UpdatedUserName {
 
-  private Long chatId;
-
-  // TODO: remove
-  private UserWithImageDto user;
-
-  private UserWithImageDto chatWithUser;
+  private String firstName;
+  private String lastName;
 }

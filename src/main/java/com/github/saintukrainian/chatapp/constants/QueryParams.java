@@ -20,4 +20,6 @@ public class QueryParams {
   public static final String CURRENT_USER_ID = "currentUserId";
   public static final String MESSAGES_IDS = "messagesIds";
   public static final String IMAGE_ID = "imageId";
+  public static final String FIRST_NAME = "firstName";
+  public static final String LAST_NAME = "lastName";
 }

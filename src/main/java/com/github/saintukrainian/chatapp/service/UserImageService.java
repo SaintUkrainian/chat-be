@@ -8,7 +8,6 @@ import com.github.saintukrainian.chatapp.repository.ComplexUserRepository;
 import com.github.saintukrainian.chatapp.repository.UserImageRepository;
 import java.io.IOException;
 import java.util.List;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,7 @@ public class UserImageService {
   private final UserImageRepository userImageRepository;
   private final ComplexUserRepository complexUserRepository;
 
-  @Transactional
-  public boolean saveImageForUser(Long userId, MultipartFile rawImage) throws IOException {
+  public UserImage saveImageForUser(Long userId, MultipartFile rawImage) throws IOException {
     UserImage imageCompressed = UserImage.builder()
         .type(rawImage.getContentType())
         .name(rawImage.getOriginalFilename())
@@ -33,15 +31,18 @@ public class UserImageService {
 
     UserImage savedImage = userImageRepository.save(imageCompressed);
 
-    UserImageCache.addToCache(userId, UserImage.builder()
+    UserImage imageDecompressed = UserImage.builder()
         .imageId(savedImage.getImageId())
         .type(rawImage.getContentType())
         .name(rawImage.getOriginalFilename())
         .userId(userId)
         .data(rawImage.getBytes())
-        .build());
+        .build();
 
-    return complexUserRepository.saveImageForUser(userId, savedImage.getImageId());
+    UserImageCache.addToCache(userId, imageDecompressed);
+
+    complexUserRepository.saveImageForUser(userId, savedImage.getImageId());
+    return imageDecompressed;
   }
 
   public List<UserImage> findAllUserImages() {

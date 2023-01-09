@@ -1,8 +1,8 @@
 package com.github.saintukrainian.chatapp.controller;
 
+import com.github.saintukrainian.chatapp.model.UpdatedUserData;
 import com.github.saintukrainian.chatapp.model.UserDto;
 import com.github.saintukrainian.chatapp.model.request.SearchRequest;
-import com.github.saintukrainian.chatapp.service.UserImageService;
 import com.github.saintukrainian.chatapp.service.UserService;
 import java.io.IOException;
 import java.util.List;
@@ -22,18 +22,18 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
 
   final UserService userService;
-  final UserImageService userImageService;
 
   @PostMapping
   public List<UserDto> findUsersBySearchRequest(@RequestBody SearchRequest searchRequest) {
     return userService.findUsersBySearchRequest(searchRequest);
   }
 
-  @PostMapping("/{userId}/image")
-  public ResponseEntity<Boolean> saveImageForUser(@PathVariable Long userId,
-      @RequestParam("image") MultipartFile rawImage)
+  @PostMapping("/{userId}/update-user-data")
+  public ResponseEntity<UpdatedUserData> updateUserData(@PathVariable Long userId,
+      @RequestParam(value = "image", required = false) MultipartFile rawImage,
+      @RequestParam(value = "updatedUserName", required = false) String updatedUserName)
       throws IOException {
-    return ResponseEntity.ok(userImageService.saveImageForUser(userId, rawImage));
+    return ResponseEntity.ok(userService.updateUserData(userId, rawImage, updatedUserName));
   }
 
 }

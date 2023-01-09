@@ -1,8 +1,8 @@
 spring:
   servlet:
     multipart:
-      max-file-size: 500KB
-      max-request-size: 1MB
+      max-file-size: 2MB
+      max-request-size: 3MB
   profiles:
     default: dev
   kafka:
