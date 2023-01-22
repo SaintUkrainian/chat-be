@@ -45,7 +45,6 @@ public class ChatUserService {
   private ChatUserDto mapToChatUserDto(ChatUser chatUser) {
     return ChatUserDto.builder()
         .chatWithUser(userDtoMapper.mapToUserWithImageDto(chatUser.getChatWithUser()))
-        .user(userDtoMapper.mapToUserWithImageDto(chatUser.getUser()))
         .chatId(chatUser.getChatId())
         .build();
   }

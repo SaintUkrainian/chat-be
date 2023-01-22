@@ -1,10 +1,13 @@
 package com.github.saintukrainian.chatapp.context;
 
 import java.security.Principal;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserContext {
 
-  public static Principal CURRENT_USER = null;
+  private static Principal CURRENT_USER;
 
   public static void login(Principal principal) {
     CURRENT_USER = principal;

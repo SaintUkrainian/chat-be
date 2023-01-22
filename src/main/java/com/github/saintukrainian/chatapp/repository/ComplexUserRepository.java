@@ -37,9 +37,9 @@ public class ComplexUserRepository {
         User.class);
 
     nativeQuery.setParameter(SEARCH_STRING, searchRequest.getSearchString());
-    nativeQuery.setParameter(CURRENT_USER_ID, Long.parseLong(UserContext.CURRENT_USER.getName()));
+    nativeQuery.setParameter(CURRENT_USER_ID, UserContext.getUserId());
 
-    return (List<User>) nativeQuery.getResultList();
+    return nativeQuery.getResultList();
   }
 
   @Transactional

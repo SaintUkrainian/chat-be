@@ -2,7 +2,6 @@ package com.github.saintukrainian.chatapp.model;
 
 import com.github.saintukrainian.chatapp.entity.UserImage;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

@@ -13,8 +13,5 @@ public class ChatUserDto {
 
   private Long chatId;
 
-  // TODO: remove
-  private UserWithImageDto user;
-
   private UserWithImageDto chatWithUser;
 }
