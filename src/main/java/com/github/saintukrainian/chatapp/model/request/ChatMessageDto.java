@@ -34,8 +34,5 @@ public class ChatMessageDto {
   @JsonProperty("isSeen")
   private boolean seen;
 
-  @JsonProperty("isDeleted")
-  private boolean deleted;
-
   private BigInteger unseenMessagesCount;
 }

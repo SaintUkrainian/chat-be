@@ -15,8 +15,8 @@ spring:
       message-path: ${spring.websocket.topic-base-path}/message
 server:
   port: 8080
-#kafka:
-#  enabled: true
+kafka:
+  enabled: true
 ---
 
 spring:

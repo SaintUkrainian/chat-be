@@ -68,11 +68,12 @@ public class MessageWebsocketController {
 
   @MessageMapping("/websocket-private-chat/delete-message")
   public void deleteMessage(ChatMessageDto message) throws JsonProcessingException {
-    message.setDeleted(true);
     chatMessageService.deleteMessage(message);
 
+    // TODO: Fix the bug with null pointer exception!
     ChatMessageDto latestMessageByChatId = chatMessageService.findLatestMessageByChatId(
         message.getChatId());
+
     latestMessageByChatId.setUnseenMessagesCount(
         chatMessageService.getCountOfUnseenMessagesByChatIdAndUserId(message.getChatId(),
             message.getFromUser().getUserId()));

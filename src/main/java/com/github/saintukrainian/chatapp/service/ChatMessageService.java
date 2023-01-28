@@ -66,7 +66,7 @@ public class ChatMessageService {
 
   public ChatMessageDto findLatestMessageByChatId(Long chatId) {
     return mapToMessageDto(
-        chatMessageRepository.findTopByChatChatIdOrderBySendTimestampDesc(chatId));
+        chatMessageRepository.findTopByChatChatIdOrderBySendTimestampDesc(chatId), chatId);
   }
 
   public BigInteger getCountOfUnseenMessagesByChatId(Long chatId) {
@@ -75,6 +75,12 @@ public class ChatMessageService {
 
   public BigInteger getCountOfUnseenMessagesByChatIdAndUserId(Long chatId, Long userId) {
     return complexChatMessageRepository.getCountOfUnseenMessagesByChatIdAndUserId(chatId, userId);
+  }
+
+  private ChatMessageDto mapToMessageDto(ChatMessage message, Long chatId) {
+    ChatMessageDto chatMessageDto = mapToMessageDto(message);
+    chatMessageDto.setChatId(chatId);
+    return chatMessageDto;
   }
 
   private ChatMessageDto mapToMessageDto(ChatMessage message) {
