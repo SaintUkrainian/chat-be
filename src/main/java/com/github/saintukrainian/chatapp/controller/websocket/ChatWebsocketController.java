@@ -48,4 +48,17 @@ public class ChatWebsocketController {
     simpMessagingTemplate.convertAndSend("/topic/new-chat/" + chatRequest.getToUserId(),
         toUserChat);
   }
+
+  @MessageMapping("/websocket-delete-chat")
+  public void deleteChatForBothUsers(ChatRequest chatRequest) {
+    log.info("Deleting chat by request: {}", chatRequest);
+    Long chatId = chatRequest.getChatId();
+
+    chatFacade.deleteChat(chatId);
+
+    simpMessagingTemplate.convertAndSend("/topic/delete-chat/" + chatRequest.getFromUserId(),
+        chatId);
+    simpMessagingTemplate.convertAndSend("/topic/delete-chat/" + chatRequest.getToUserId(),
+        chatId);
+  }
 }

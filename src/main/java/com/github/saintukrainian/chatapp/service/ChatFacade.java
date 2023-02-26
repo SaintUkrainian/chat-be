@@ -31,4 +31,8 @@ public class ChatFacade {
 
     chatRequest.setChatId(createdChat.getChatId());
   }
+
+  public void deleteChat(Long chatId) {
+    chatRepository.deleteById(chatId);
+  }
 }
